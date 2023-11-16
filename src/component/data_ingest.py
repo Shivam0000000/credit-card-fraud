@@ -5,6 +5,7 @@ import sys
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 import pandas as pd
+from src.component.data_transformation import DataTransformation
 
 @dataclass
 class DataIngestionConfig:
@@ -22,6 +23,7 @@ class DataIngestion:
             logging.info("Enter the DataIngestion")  
 
             df=pd.read_csv('notebook/data/creditcard.csv')
+            
 
             os.makedirs(os.path.dirname(self.data_ingestion.train_data_path),exist_ok=True)
 
@@ -43,6 +45,8 @@ class DataIngestion:
 
 if __name__=="__main__":
     obj=DataIngestion()
-    obj.initiate_data_ingestion()
+    train,test=obj.initiate_data_ingestion()
 
+    obj2=DataTransformation()
+    train_arr,test_arr,_=obj2.initiate_data_transformation(train,test)
 
